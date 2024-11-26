@@ -26,6 +26,7 @@ public class Main {
             Double totalPrice = printCost(product);
             System.out.printf("%s %.2f %s", product.getName(), totalPrice, "\r\n");
         }
+        System.out.println("Added it in new branch homeworks/homework01.");
     }
 
     private static Double printCost(Product product) {
