@@ -1,11 +1,14 @@
 package ru.natali;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j//аннотация Lombok делает нам поле log
 public class Main {
     public static void main(String[] args) {
-
+        log.info("Beginning main....");
         List<Product> products = new ArrayList<>();
 
         products.add(new Product(1L, "Шкаф", 3655.80, 5));
@@ -26,6 +29,7 @@ public class Main {
     }
 
     private static Double printCost(Product product) {
+        log.info("Product: {}", product.getName());
         return product.getPrice() * product.getQuantity();
     }
 }
