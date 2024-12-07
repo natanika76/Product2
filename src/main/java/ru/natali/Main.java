@@ -25,6 +25,7 @@ public class Main {
         for (Product product : products) {
             Double totalPrice = printCost(product);
             System.out.printf("%s %.2f %s", product.getName(), totalPrice, "\r\n");
+
         }
     }
 
