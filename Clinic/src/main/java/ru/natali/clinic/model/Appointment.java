@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
@@ -17,4 +18,15 @@ public class Appointment {
     private Medservice service;
     private LocalDateTime appointmentDate;
     private String status;
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "id=" + id +
+                ", patient=" + patient +
+                ", doctor=" + doctor +
+                ", service=" + service +
+                ", appointmentDate=" + appointmentDate.format(DateTimeFormatter.ofPattern("d:MMM:uuuu HH:mm")) +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
