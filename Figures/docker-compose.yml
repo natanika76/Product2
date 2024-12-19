@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: java_app
+    volumes:
+      - ./input.txt:/app/input.txt
+      - ./output.txt:/app/output.txt
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx1024m
+    ports:
+      - "8080:8080"
+
