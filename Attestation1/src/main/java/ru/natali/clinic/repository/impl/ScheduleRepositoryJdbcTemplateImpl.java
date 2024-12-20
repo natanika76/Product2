@@ -1,9 +1,10 @@
-package ru.natali.clinic.repository;
+package ru.natali.clinic.repository.impl;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import ru.natali.clinic.model.Doctor;
 import ru.natali.clinic.model.Schedule;
+import ru.natali.clinic.repository.ScheduleRepository;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;

@@ -1,19 +1,16 @@
-package ru.natali.clinic.repository;
+package ru.natali.clinic.repository.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import ru.natali.clinic.model.*;
+import ru.natali.clinic.repository.AppointmentRepository;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 public class AppointmentRepositoryJdbcTemplateImpl implements AppointmentRepository {

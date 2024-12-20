@@ -3,6 +3,7 @@ package ru.natali.clinic.app;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import ru.natali.clinic.model.*;
 import ru.natali.clinic.repository.*;
+import ru.natali.clinic.repository.impl.*;
 
 import javax.sql.DataSource;
 import java.time.LocalDate;
