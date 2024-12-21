@@ -1,15 +1,13 @@
 version: '3.8'
+
 services:
-  app:
+  java-app:
     build:
-      context: .
+      context: . # Контекст сборки текущая папка
       dockerfile: Dockerfile
-    container_name: java_app
+    container_name: java_app_container
     volumes:
-      - ./input.txt:/app/input.txt
-      - ./output.txt:/app/output.txt
-    environment:
-      - JAVA_OPTS=-Xms512m -Xmx1024m
-    ports:
-      - "8080:8080"
+      - ./input.txt:/app/input.txt   # Привязка файла input.txt
+      - ./output.txt:/app/output.txt # Привязка файла output.txt
+    command: ["java", "-jar", "app.jar"]
 

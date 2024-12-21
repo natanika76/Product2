@@ -1,15 +1,14 @@
-# Используем официальный образ Java
-FROM openjdk:17-jdk-slim
+# Используем официальный образ OpenJDK
+FROM openjdk:21
 
-# Устанавливаем рабочую директорию
+# Создаём рабочую директорию внутри контейнера
 WORKDIR /app
 
-# Копируем JAR-файл в контейнер
-COPY target/Figures-1.0-SNAPSHOT.jar app.jar
+# Копируем JAR файл из папки target в контейнер
+COPY target/figures-0.0.1.jar app.jar
 
-# Копируем файлы input.txt и output.txt в контейнер
-COPY input.txt input.txt
+# Копируем входной файл
+COPY input.txt /app/input.txt
 
-# Указываем команду для запуска приложения
+# Устанавливаем точку входа
 CMD ["java", "-jar", "app.jar"]
-

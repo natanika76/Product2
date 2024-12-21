@@ -74,6 +74,7 @@ public class App {
             for (String result : results) {
                 writer.println(result);
             }
+            System.out.println("Запись в файл прошла успешно.");
 
         } catch (IOException e) {
             System.err.println("Ошибка при работе с файлами: " + e.getMessage());
