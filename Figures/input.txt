@@ -1,0 +1,4 @@
+rectangle,4,1
+square,0,0,7
+circle,0,0,3
+ellipse,11,4
