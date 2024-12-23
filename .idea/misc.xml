@@ -5,8 +5,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/Dockertest/pom.xml" />
-        <option value="$PROJECT_DIR$/Clinic/pom.xml" />
+        <option value="$PROJECT_DIR$/ListSet/pom.xml" />
       </list>
     </option>
   </component>
