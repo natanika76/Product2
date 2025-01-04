@@ -11,9 +11,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class Main {
-    //javadoc -d docs src/main/java/ru/natali/Main.java  - команда в терминале создает Javadoc
-    // в той же директории, откуда была запущена команда,
-    // создается папка docs, там файл index.html открыть в браузере
 
     /**
      * Метод для построения тернарной операции из предиката и двух функций.
@@ -29,12 +26,11 @@ public class Main {
         return x -> condition.test(x) ? ifTrue.apply(x) : ifFalse.apply(x);
     }
 
-    public static void main(String[] args) throws IOException {
-
+    public static void main(String[] args) {
         // Путь к входному файлу
-        String inputFilePath = "src/main/resources/input.txt";
+        String inputFilePath = "FunctionInterface/src/main/resources/input.txt";
         // Путь к выходному файлу
-        String outputFilePath = "src/main/resources/output.txt";
+        String outputFilePath = "FunctionInterface/src/main/resources/output.txt";
 
         // Использование try-with-resources для автоматического закрытия потоков
         try (
@@ -42,19 +38,14 @@ public class Main {
                 BufferedReader bufferedReader = new BufferedReader(fileReader)
         ) {
             // Считывание всей строки из файла
-            //если в файле input.txt нет данных или он содержит только
-            // пробелы, программа бросит исключение IOException
             String line = bufferedReader.readLine();
-            if (line == null || line.isEmpty()) {
-                throw new IOException("Файл пустой или содержит только пробельные символы.");
-            }
 
             // Создание предиката, проверяющего, является ли строка пустой или нулевой
             Predicate<String> isEmptyOrNull = s -> s == null || s.trim().isEmpty();
 
             // Функции для обработки пустых/не пустых строк
-            Function<String, Integer> handleIfTrue = s -> 0; //handleIfTrue возвращает 0, если строка пустая или равна null
-            Function<String, Integer> handleIfFalse = String::length; //handleIfFalse возвращает длину строки, если она непуста и не равна null
+            Function<String, Integer> handleIfTrue = s -> 0; // Возвращает 0, если строка пустая или равна null
+            Function<String, Integer> handleIfFalse = String::length; // Возвращает длину строки, если она непуста и не равна null
 
             // Комбинируем функции через тернарный оператор
             Function<String, Integer> safeStringLength = ternaryOperator(isEmptyOrNull, handleIfTrue, handleIfFalse);
@@ -73,8 +64,6 @@ public class Main {
             System.err.println("Файл не найден: " + inputFilePath);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (NumberFormatException e) {
-            System.err.println("Ошибка преобразования строки в число.");
         }
     }
 }
