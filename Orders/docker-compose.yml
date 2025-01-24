@@ -1,0 +1,32 @@
+services:
+  # Сервис для PostgreSQL
+  postgres:
+    image: postgres:17
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Lzmf2000
+      POSTGRES_DB: products
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Сервис для Spring Boot приложения
+  order-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: order_app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/products
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Lzmf2000
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+# Определяем том для хранения данных PostgreSQL
+volumes:
+  postgres_data:
