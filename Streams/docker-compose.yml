@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  java-app:
+    build:
+      context: . # Контекст сборки текущая папка
+      dockerfile: Dockerfile
+    container_name: java_app_container
+    volumes:
+      - ./src/main/resources/input.txt:/app/src/main/resources/input.txt   # Привязка файла input.txt
+      - ./src/main/resources/output.txt:/app/src/main/resources/output.txt # Привязка файла output.txt
+    command: ["java", "-jar", "app.jar"]
+
