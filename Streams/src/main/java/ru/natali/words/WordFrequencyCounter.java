@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 public class WordFrequencyCounter {
 
     public static void main(String[] args) throws IOException {
-        String inputFilePath = "Streams/src/main/resources/input.txt"; // Путь к входному файлу
-        String outputFilePath = "Streams/src/main/resources/output.txt"; // Путь к выходному файлу
+        String inputFilePath = "src/main/resources/input.txt"; // Путь к входному файлу
+        String outputFilePath = "src/main/resources/output.txt"; // Путь к выходному файлу
         int n = 10; // Количество наиболее часто встречающихся слов для вывода
 
         // Чтение файла и подсчет частоты слов
