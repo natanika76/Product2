@@ -1,0 +1,13 @@
+package ru.natali.students.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class StudentRegistrationDto {
+    private String fullName;
+    private String email;
+}
