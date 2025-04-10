@@ -1,0 +1,1 @@
+ALTER TABLE courses_schema.courses ADD COLUMN active boolean NOT NULL DEFAULT true;
