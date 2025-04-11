@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчёт о землетрясениях за период с {startTime} по {endTime}</title>
+</head>
+<body>
+<h1>Отчёт о землетрясениях за период с {startTime} по {endTime}</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Заголовок</th>
+        <th>Время</th>
+        <th>Магнитуда</th>
+        <th>Место</th>
+    </tr>
+    <tr th:each="earthquake : ${earthquakes}">
+        <td th:text="${earthquake.id}">ID</td>
+        <td th:text="${earthquake.title}">Title</td>
+        <td th:text="${earthquake.time}">Time</td>
+        <td th:text="${earthquake.magnitude}">Magnitude</td>
+        <td th:text="${earthquake.place}">Place</td>
+    </tr>
+</table>
+</body>
+</html>
