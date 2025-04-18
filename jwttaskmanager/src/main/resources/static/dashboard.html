@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f4f4f4;
+        padding: 50px;
+    }
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        display: inline-block;
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Добро пожаловать в панель управления!</h1>
+  <p>Вы успешно вошли в систему.</p>
+  <button onclick="logout()">Выйти</button>
+</div>
+
+<script>
+  // Проверяем наличие JWT-токена
+  const token = localStorage.getItem("jwtToken");
+
+  if (!token) {
+      window.location.href = "/login.html"; // Если нет токена, редирект на логин
+  }
+
+  // Здесь можно также выполнить дополнительную проверку, например, отправить запрос к API, чтобы убедиться, что токен валиден.
+
+  function logout() {
+      localStorage.removeItem("jwtToken");
+      document.cookie = "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      window.location.href = "/login.html";
+  }
+</script>
+</body>
+</html>
