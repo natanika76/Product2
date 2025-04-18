@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Вход в систему</title>
+  <style>
+    body { background: #f5f5f5; font-family: Arial, sans-serif; }
+    .container {
+      max-width: 400px; margin: 100px auto;
+      background: #fff; padding: 30px;
+      border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 { text-align: center; }
+    input[type="text"], input[type="password"] {
+      width: 100%; padding: 10px; margin: 10px 0;
+      border: 1px solid #ccc; border-radius: 4px;
+    }
+    button {
+      width: 100%; padding: 10px;
+      background: #007bff; border: none; color: #fff;
+      border-radius: 4px; cursor: pointer;
+    }
+    button:hover { background: #0056b3; }
+    .message { margin: 15px 0; text-align: center; color: red; }
+  </style>
+</head>
+<body>
+<div class="container" id="login-container">
+  <h2>Вход</h2>
+  <input id="username" type="text" placeholder="Логин">
+  <input id="password" type="password" placeholder="Пароль">
+  <button onclick="login()">Войти</button>
+  <div class="message" id="message"></div>
+</div>
+
+<script>
+  function login(){
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"  // Добавляем Accept-заголовок
+      },
+      body: JSON.stringify({username, password})
+    })
+    .then(response => {
+      if(response.ok) return response.json();
+      else throw new Error("Неверные учётные данные");
+    })
+    .then(data => {
+      localStorage.setItem("jwtToken", data.token);
+      // Переход на страницу dashboard.html
+      window.location.href = "dashboard.html";
+    })
+    .catch(err => {
+      document.getElementById("message").innerText = err.message;
+    });
+  }
+</script>
+</body>
+</html>
