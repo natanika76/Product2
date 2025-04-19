@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчет по Tasketl3b</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body { margin: 20px; }
+        .filter-container { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-light bg-light mb3">
+    <span class="navbar-text">
+        Привет, <span id="usernameDisplay">Загрузка</span>!
+    </span>
+    <!--form action="/logout" method="post">
+        <button type="submit" class="btn btn-outline-danger">Logout</button>
+    </form-->
+    <form action="/perform_logout" method="post">
+        <button type="submit" class="btn btn-outline-danger">Logout</button>
+    </form>
+</nav>
+<h1>Отчет по Tasketl3b</h1>
+<div class="filter-container">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="filterEI">ЕИ</label>
+            <select id="filterEI" class="form-control">
+                <option value="">Все</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="filterStatus">Статус</label>
+            <select id="filterStatus" class="form-control">
+                <option value="">Все</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="filterGruppa">Группа</label>
+            <select id="filterGruppa" class="form-control">
+                <option value="">Все</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered" id="dataTable">
+    <thead class="thead-dark">
+    <tr>
+        <th>ЕИ</th>
+        <th>StatusTime</th>
+        <th>Длительность</th>
+        <th>Статус</th>
+        <th>Группа</th>
+        <th>Назначение</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Здесь будут строки с данными -->
+    </tbody>
+</table>
+
+<!-- jQuery и Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded",function() {
+    fetch('/api/user')
+        .then(response => {
+            if(!response.ok) {
+                throw new Error('Ошибка');
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById("usernameDisplay").textContent=data.username;
+        })
+        .catch(error => {
+            console.error('Ошибка: ', error);
+            document.getElementById("usernameDisplay").textContent = "anonymous";
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        let allData = [];
+        // Загрузка данных с бэкенда
+        $.ajax({
+            url: '/api/data',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                allData = data;
+                populateFilters(allData);
+                renderTable(allData);
+            },
+            error: function(err) {
+                console.error('Ошибка получения данных:', err);
+            }
+        });
+
+        // Первоначальное заполнение фильтров
+        function populateFilters(data) {
+            let eiSet = new Set();
+            let statusSet = new Set();
+            let gruppaSet = new Set();
+
+            data.forEach(item => {
+                if (item.eI !== null) eiSet.add(item.eI);
+                if (item.status) statusSet.add(item.status);
+                if (item.gruppa) gruppaSet.add(item.gruppa);
+            });
+
+            updateSelectOptions($('#filterEI'), Array.from(eiSet));
+            updateSelectOptions($('#filterStatus'), Array.from(statusSet));
+            updateSelectOptions($('#filterGruppa'), Array.from(gruppaSet));
+        }
+
+        // Обновление опций в селекте с сохранением текущего выбранного значения
+        function updateSelectOptions($select, options) {
+            let currentVal = $select.val();
+            $select.empty();
+            // Добавляем пункт "Все"
+            $select.append(`<option value="">Все</option>`);
+            options.forEach(opt => {
+                let selectedAttr = (opt.toString() === currentVal) ? 'selected' : '';
+                $select.append(`<option value="${opt}" ${selectedAttr}>${opt}</option>`);
+            });
+        }
+
+        // Отображение данных в таблице
+        function renderTable(data) {
+            let tbody = $('#dataTable tbody');
+            tbody.empty();
+            data.forEach(item => {
+                let row = `<tr>
+                    <td>${item.eI !== null ? item.eI : ''}</td>
+                    <td>${item.statusTime ? item.statusTime : ''}</td>
+                    <td>${item.dlitelnost}</td>
+                    <td>${item.status ? item.status : ''}</td>
+                    <td>${item.gruppa ? item.gruppa : ''}</td>
+                    <td>${item.naznachenie !== null ? item.naznachenie : ''}</td>
+                </tr>`;
+                tbody.append(row);
+            });
+        }
+
+        // Применение фильтров
+        function applyFilters() {
+            let selectedEI = $('#filterEI').val();
+            let selectedStatus = $('#filterStatus').val();
+            let selectedGruppa = $('#filterGruppa').val();
+
+            let filteredData = allData.filter(item => {
+                let matchEI = (selectedEI === "" || item.eI.toString() === selectedEI);
+                let matchStatus = (selectedStatus === "" || item.status === selectedStatus);
+                let matchGruppa = (selectedGruppa === "" || item.gruppa === selectedGruppa);
+                return matchEI && matchStatus && matchGruppa;
+            });
+            renderTable(filteredData);
+            updateInterdependentFilters();
+        }
+
+        // Обновление доступных опций в других фильтрах на основе текущего выбора
+        function updateInterdependentFilters() {
+            let selectedEI = $('#filterEI').val();
+            let selectedStatus = $('#filterStatus').val();
+            let selectedGruppa = $('#filterGruppa').val();
+
+            // Для фильтра ЕИ: учитываем выбранные статус и группу
+            let filteredForEI = allData.filter(item => {
+                let matchStatus = (selectedStatus === "" || item.status === selectedStatus);
+                let matchGruppa = (selectedGruppa === "" || item.gruppa === selectedGruppa);
+                return matchStatus && matchGruppa;
+            });
+            let eiSet = new Set();
+            filteredForEI.forEach(item => {
+                if(item.eI !== null) eiSet.add(item.eI);
+            });
+
+            // Для фильтра Статус: учитываем выбранные ЕИ и группу
+            let filteredForStatus = allData.filter(item => {
+                let matchEI = (selectedEI === "" || item.eI.toString() === selectedEI);
+                let matchGruppa = (selectedGruppa === "" || item.gruppa === selectedGruppa);
+                return matchEI && matchGruppa;
+            });
+            let statusSet = new Set();
+            filteredForStatus.forEach(item => {
+                if(item.status) statusSet.add(item.status);
+            });
+
+            // Для фильтра Группа: учитываем выбранные ЕИ и статус
+            let filteredForGruppa = allData.filter(item => {
+                let matchEI = (selectedEI === "" || item.eI.toString() === selectedEI);
+                let matchStatus = (selectedStatus === "" || item.status === selectedStatus);
+                return matchEI && matchStatus;
+            });
+            let gruppaSet = new Set();
+            filteredForGruppa.forEach(item => {
+                if(item.gruppa) gruppaSet.add(item.gruppa);
+            });
+
+            updateSelectOptions($('#filterEI'), Array.from(eiSet));
+            updateSelectOptions($('#filterStatus'), Array.from(statusSet));
+            updateSelectOptions($('#filterGruppa'), Array.from(gruppaSet));
+        }
+
+        // При изменении любого фильтра применяем фильтрацию
+        $('#filterEI, #filterStatus, #filterGruppa').on('change', function(){
+            applyFilters();
+        });
+    });
+</script>
+</body>
+</html>

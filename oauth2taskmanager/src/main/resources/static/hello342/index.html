@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Пример WebSocket</title>
+  <!-- Подключаем jQuery, SockJS и StompJS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+  <script>
+    var stompClient = null;
+
+    function connect() {
+        var socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function(frame) {
+            console.log('Подключено: ' + frame);
+            $("#connect").prop("disabled", true);
+            $("#disconnect").prop("disabled", false);
+            // подписываемся на получение сообщений
+            stompClient.subscribe('/topic/greetings', function(greeting) {
+                showGreeting(JSON.parse(greeting.body).content);
+            });
+        });
+    }
+
+    function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+        }
+        $("#connect").prop("disabled", false);
+        $("#disconnect").prop("disabled", true);
+        console.log("Отключено");
+    }
+
+    function sendName() {
+        var name = $("#name").val();
+        stompClient.send("/app/hello342", {}, JSON.stringify({'name': name}));
+    }
+
+    function showGreeting(message) {
+        $("#greetings").append("<tr><td>" + message + "</td></tr>");
+    }
+
+    $(function () {
+        $("form").on('submit', function (e) { e.preventDefault(); });
+        $("#connect").click(connect);
+        $("#disconnect").click(disconnect);
+        $("#send").click(sendName);
+    });
+  </script>
+</head>
+<body>
+<h2>Пример WebSocket на Spring Boot</h2>
+<div>
+  <button id="connect">Подключиться</button>
+  <button id="disconnect" disabled>Отключиться</button>
+</div>
+<div>
+  <input type="text" id="name" placeholder="Введите имя" />
+  <button id="send">Отправить</button>
+</div>
+<table border="1" id="greetings">
+  <tr>
+    <th>Сообщения</th>
+  </tr>
+</table>
+</body>
+</html>

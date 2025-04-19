@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Данные из MySQL</title>
+  <!-- Подключение Bootstrap CSS для красивого оформления страницы -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Дополнительные стили для центрирования содержимого */
+    body {
+        background-color: #0b4783;
+    }
+    .container {
+        margin-top: 100px;
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Заголовок страницы, значение которого передается из модели -->
+  <h1 class="mb-4" th:text="${header}">Заголовок</h1>
+  <!-- Кнопка для скачивания Excel файла -->
+  <a class="btn btn-primary btn-lg" th:href="@{/download}" th:text="${buttonText}">Скачать Excel</a>
+</div>
+</body>
+</html>

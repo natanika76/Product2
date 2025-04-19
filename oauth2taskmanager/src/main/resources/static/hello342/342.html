@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Мониторинг CPU</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script>
+        var stompClient = null;
+
+        function connect() {
+            var socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                console.log("Connected: " + frame);
+                stompClient.subscribe('/topic/cpu', function(message) {
+                    $("#cpu").html("CPU Load: " + message.body + "%");
+                });
+            });
+        }
+
+        $(document).ready(function() {
+            connect();
+        });
+    </script>
+</head>
+<body>
+<h2>Мониторинг загрузки процессора</h2>
+<div id="cpu">Ожидание данных...</div>
+</body>
+</html>
