@@ -1,0 +1,36 @@
+\<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>График платежей</title>
+</head>
+<body>
+<h2>График платежей</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Месяц</th>
+        <th>Сумма платежа</th>
+        <th>Платеж по основному долгу</th>
+        <th>Платеж по процентам</th>
+        <th>Остаток долга</th>
+        <th>Проценты</th>
+        <th>Долг</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="payment : ${payments}">
+        <td th:text="${payment.id}"></td>
+        <td th:text="${payment.month}"></td>
+        <td th:text="${payment.sumPayment}"></td>
+        <td th:text="${payment.mainDebtPayment}"></td>
+        <td th:text="${payment.interestPayment}"></td>
+        <td th:text="${payment.remainingDebt}"></td>
+        <td th:text="${payment.interest}"></td>
+        <td th:text="${payment.debt}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
