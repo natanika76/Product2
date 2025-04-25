@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ru.natali.courses"},{"l":"ru.natali.courses.aop"},{"l":"ru.natali.courses.config"},{"l":"ru.natali.courses.controller"},{"l":"ru.natali.courses.dto"},{"l":"ru.natali.courses.model"},{"l":"ru.natali.courses.repository"},{"l":"ru.natali.courses.service"}];updateSearchResults();
