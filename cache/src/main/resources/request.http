@@ -1,0 +1,122 @@
+### Запросить список всех метрик
+GET http://localhost:8080/actuator/metrics
+
+### Проверить метрики по адресу информация о кэшах
+GET http://localhost:8080/actuator/caches
+
+### Проверить метрики по адресу метрики попаданий в кэш
+GET http://localhost:8080/actuator/metrics/cache.gets
+
+### Получить все курсы
+GET http://localhost:8080/api/courses
+
+### Получить активные курсы
+GET http://localhost:8080/api/courses/active
+
+### Получить архивные курсы
+GET http://localhost:8080/api/courses/archived
+
+### Создать новый курс
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+  "name": "Совсем новый курс",
+  "startDate": "2024-01-01",
+  "active": true,
+  "archived": false
+}
+
+### Удалить курс (мягкое удаление)
+DELETE http://localhost:8080/api/courses/8
+
+### Обновить курс
+PUT http://localhost:8080/api/courses/2
+Content-Type: application/json
+
+{
+  "name": "New Updated Course",
+  "startDate": "2023-11-01",
+  "active": false
+}
+
+### Получить студентов курса
+GET http://localhost:8080/api/courses/3/students
+
+### Создать студента
+POST http://localhost:8080/api/courses/students
+Content-Type: application/json
+
+{
+  "firstName": "Федор",
+  "lastName": "Шаляпин",
+  "email": "fedorshalyapin@example.com",
+  "username": "shalyapa",
+  "password": "1111"
+}
+
+### Обновить данные студента
+PUT http://localhost:8080/api/courses/students/24
+Content-Type: application/json
+
+{
+  "firstName": "Иван",
+  "lastName": "Иванов",
+  "email": "new_email@example.com",
+  "username": "ivi",
+  "password": "1111"
+}
+
+### Получить студентов по первой букве фамилии
+GET http://localhost:8080/api/courses/5/students-by-last-name-starts-with/M
+
+### Получить статистику по курсам
+GET http://localhost:8080/api/courses/statistics
+
+### Получить отчет по пустым назначениям
+GET http://localhost:8080/api/courses/empty-assignments
+
+### Получить распределение курсов по месяцам
+GET http://localhost:8080/api/courses/by-month
+
+### Получить полный отчет
+GET http://localhost:8080/api/courses/full-report
+
+### Получить распределение по первой букве фамилии
+GET http://localhost:8080/api/courses/4/last-name-distribution
+
+### Получить курсы студента
+GET http://localhost:8080/api/courses/students/2/courses
+
+### Swagger UI
+GET http://localhost:8080/swagger-ui/index.html
+
+### Проверка работы API
+GET http://localhost:8080/api/test
+
+### Проверка пароля (пример)
+GET http://localhost:8080/api/test/check-password
+
+### Страница входа (только для браузера)
+# GET http://localhost:8080/login
+# Этот запрос работает только в браузере, так как возвращает HTML
+
+### Страница регистрации (только для браузера)
+# GET http://localhost:8080/register
+# Этот запрос работает только в браузере, так как возвращает HTML
+
+### Регистрация нового студента
+POST http://localhost:8080/register
+Content-Type: application/x-www-form-urlencoded
+
+firstName=Иван&lastName=Иванов&email=ivan@example.com&username=ivanov&password=12345
+
+### Страница успешной регистрации (только для браузера)
+# GET http://localhost:8080/register/registration-success
+# Этот запрос работает только в браузере
+
+### Dashboard (только для браузера)
+# GET http://localhost:8080/dashboard
+# Требует аутентификации, работает только в браузере
+
+
