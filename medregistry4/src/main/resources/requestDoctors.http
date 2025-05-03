@@ -1,0 +1,42 @@
+### Get all doctors
+GET http://localhost:8080/api/doctors
+Accept: application/json
+
+### Create a new doctor
+POST http://localhost:8080/api/doctors
+Content-Type: application/json
+
+{
+  "firstName": "Борис",
+  "lastName": "Борисов",
+  "specialization": "диетолог"
+}
+
+### Create another doctor
+POST http://localhost:8080/api/doctors
+Content-Type: application/json
+
+{
+  "firstName": "Иван",
+  "lastName": "Дляудалёнов",
+  "specialization": "физиолог"
+}
+
+### Delete doctor (replace {id} with actual ID)
+DELETE http://localhost:8080/api/doctors/2
+
+### Update doctor (replace {id} with actual ID)
+PUT http://localhost:8080/api/doctors/10
+Content-Type: application/json
+
+{
+  "firstName": "Витаc",
+  "lastName": "Юрьев",
+  "specialization": "травматолог"
+}
+
+### Get doctor by ID (replace {id} with actual ID)
+### Убедиться, что доктор не удален, т.к. удаление мягкое там не должно быть true, а то не работает!!
+GET http://localhost:8080/api/doctors/4
+Accept: application/json
+

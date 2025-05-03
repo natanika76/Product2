@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_DB: hospitaldb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Lzmf2000
+    healthcheck:  # Проверка готовности PostgreSQL
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10  # Увеличиваем количество попыток
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"  # Внешний порт 5433 → внутренний 5432
+    networks:
+      - medregistry-net
+
+  medregistry:
+    build: .
+    container_name: medregistry
+    depends_on:
+      postgres:
+        condition: service_healthy  # Ждём, пока БД станет доступна
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/hospitaldb  # Используем ВНУТРЕННИЙ порт 5432!
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Lzmf2000
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate  # Доп. настройки из application.properties
+      SPRING_LIQUIBASE_ENABLED: "true"
+    ports:
+      - "8080:8080"
+    networks:
+      - medregistry-net
+
+volumes:
+  postgres_data:
+
+networks:
+  medregistry-net:
+    driver: bridge

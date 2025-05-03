@@ -1,0 +1,10 @@
+ru.natali.medregistry
+ru.natali.medregistry.config
+ru.natali.medregistry.controller
+ru.natali.medregistry.dto
+ru.natali.medregistry.exceptions
+ru.natali.medregistry.model
+ru.natali.medregistry.repository
+ru.natali.medregistry.security
+ru.natali.medregistry.service
+ru.natali.medregistry.service.impl
