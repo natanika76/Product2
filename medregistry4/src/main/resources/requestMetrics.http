@@ -1,0 +1,19 @@
+### Количество обращений к кэшу
+http://localhost:8080/actuator/metrics/cache.gets
+
+### Количество добавлений в кэш
+http://localhost:8080/actuator/metrics/cache.puts
+
+### Количество удалений из кэша
+http://localhost:8080/actuator/metrics/cache.evictions
+
+### Информация о всех кэшах
+http://localhost:8080/actuator/caches
+
+GET http://localhost:8080/actuator/metrics/cache.size
+
+GET http://localhost:8080/actuator/metrics/cache.gets
+
+GET http://localhost:8080/actuator/caches
+
+GET http://localhost:8080/actuator/metrics/cache.operations

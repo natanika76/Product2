@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Список врачей</title>
+</head>
+<body>
+<h1>Список врачей:</h1>
+<div th:if="${#lists.isEmpty(doctors)}">Нет зарегистрированных врачей.</div>
+<table border="1" cellpadding="5" style="width:100%;" th:if="${!#lists.isEmpty(doctors)}">
+    <tr>
+        <th>ID врача</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Специализация</th>
+    </tr>
+    <!--/* Iterate over the list of doctors */-->
+    <tr th:each="doctor : ${doctors}">
+        <td th:text="${doctor.id}"></td>
+        <td th:text="${doctor.firstName}"></td>
+        <td th:text="${doctor.lastName}"></td>
+        <td th:text="${doctor.specialization}"></td>
+    </tr>
+</table>
+<a href="/add_doctor">Добавить нового врача</a><br/>
+<a href="/">Вернуться на главную страницу</a>
+</body>
+</html>
