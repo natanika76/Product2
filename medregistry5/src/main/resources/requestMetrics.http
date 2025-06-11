@@ -1,0 +1,8 @@
+### Информация о всех кэшах
+http://localhost:8080/actuator/caches
+
+### Endpoint cache.size
+GET http://localhost:8080/actuator/metrics/cache.size
+
+
+

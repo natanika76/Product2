@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Список пациентов</title>
+</head>
+<body>
+<h1>Список пациентов:</h1>
+<div th:if="${#lists.isEmpty(patients)}">Нет зарегистрированных пациентов.</div>
+<table border="1" cellpadding="5" style="width:100%;" th:if="${!#lists.isEmpty(patients)}">
+    <tr>
+        <th>ID пациента</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Дата рождения</th>
+        <th>Номер страховки</th>
+    </tr>
+    <!--/* Iterate over the list of patients */-->
+    <tr th:each="patient : ${patients}">
+        <td th:text="${patient.id}"></td>
+        <td th:text="${patient.firstName}"></td>
+        <td th:text="${patient.lastName}"></td>
+        <td th:text="${#temporals.format(patient.dateOfBirth,'dd-MM-yyyy')}"></td>
+        <td th:text="${patient.insuranceNumber}"></td>
+    </tr>
+</table>
+<a href="/add_patient">Добавить нового пациента</a><br/>
+<a href="/">Вернуться на главную страницу</a>
+</body>
+</html>
