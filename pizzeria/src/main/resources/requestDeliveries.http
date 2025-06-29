@@ -1,0 +1,34 @@
+### Get all deliveries
+GET http://localhost:8080/api/deliveries
+
+### Get delivery by id
+GET http://localhost:8080/api/deliveries/2
+
+### Create delivery
+POST http://localhost:8080/api/deliveries
+Content-Type: application/json
+
+{
+    "orderId": 5,
+    "employeeId": 1,
+    "status": "PROCESSING"
+}
+
+### Update delivery
+PUT http://localhost:8080/api/deliveries/6
+Content-Type: application/json
+
+{
+  "orderId": 5,
+  "employeeId": 2,
+  "status": "PROCESSING"
+}
+
+### Assign courier for delivery
+PATCH http://localhost:8080/api/deliveries/6/assign?employeeId=3
+Content-Type: application/json
+
+### To change status of delivery
+PATCH http://localhost:8080/api/deliveries/6/status?status=IN_TRANSIT
+Content-Type: application/json
+

@@ -1,0 +1,25 @@
+### Get all employees
+GET http://localhost:8080/api/employees
+
+### Create new employee
+POST http://localhost:8080/api/employees
+Content-Type: application/json
+
+{
+      "name": "Новый Сотрудник",
+      "position": "Курьер",
+      "phone": "+79167778899",
+      "email": "new@example.com",
+      "hireDate": "2023-05-01"
+}
+
+### Update employee by id
+PUT http://localhost:8080/api/employees/1
+Content-Type: application/json
+
+{
+      "position": "Старший курьер"
+}
+
+### Delete employee by id
+DELETE http://localhost:8080/api/employees/1

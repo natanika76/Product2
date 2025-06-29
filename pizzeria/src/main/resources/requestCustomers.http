@@ -1,0 +1,31 @@
+### Get all customers
+GET http://localhost:8080/api/customers
+
+### Get customer by id
+GET http://localhost:8080/api/customers/1
+
+### Create a new customer
+POST http://localhost:8080/api/customers
+Content-Type: application/json
+
+{
+  "name": "Грибов Иван Иванович",
+  "phone": "+79161277767",
+  "address": "г. Москва, ул. Ленина, д. 70, кв. 15",
+  "email": "grib@example.com"
+}
+
+### Update customer by id
+PUT http://localhost:8080/api/customers/4
+Content-Type: application/json
+
+{
+    "name": "Иванов Иван Иванович",
+    "phone": "+79161234599",
+    "address": "г. Москва, ул. Ленина, д. 10, кв. 25",
+    "email": "ivanov.new@example.com"
+}
+
+### Delete customer by id
+DELETE http://localhost:8080/api/customers/4
+

@@ -1,0 +1,73 @@
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_DB: pizzeria
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
+    healthcheck:  # Проверка готовности PostgreSQL
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10  # Увеличиваем количество попыток
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"  # Внешний порт 5433 → внутренний 5432
+    networks:
+      - pizzeria-net
+
+  pizzeria:
+    build: .
+    container_name: pizzeria
+    depends_on:
+      postgres:
+        condition: service_healthy  # Ждём, пока БД станет доступна
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/pizzeria  # Используем ВНУТРЕННИЙ порт 5432!
+      SPRING_DATASOURCE_USERNAME:
+      SPRING_DATASOURCE_PASSWORD:
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate  # Доп. настройки из application.properties
+      SPRING_LIQUIBASE_ENABLED: "true"
+    ports:
+      - "8080:8080"
+    networks:
+      - pizzeria-net
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - pizzeria-net
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "29092:29092"  # Для доступа с хоста
+      - "9092:9092"    # Для доступа внутри Docker-сети
+    networks:
+      - pizzeria-net
+
+volumes:
+  postgres_data:
+
+networks:
+  pizzeria-net:
+    driver: bridge
+
