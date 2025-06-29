@@ -1,0 +1,60 @@
+### Get all orders
+GET http://localhost:8080/api/orders
+
+### Get order by id
+GET http://localhost:8080/api/orders/1
+
+### Create new order
+POST http://localhost:8080/api/orders
+Content-Type: application/json
+
+{
+  "customerId": 2,
+  "status": "NEW",
+  "totalPrice": 750.00,
+  "deliveryAddress": "г. Москва, пр-т Мира, д. 42, кв. 12",
+  "paymentMethod": "CARD",
+  "paymentStatus": "PENDING",
+  "items": [
+    {
+      "pizzaId": 1,
+      "quantity": 1,
+      "price": 450.00
+    },
+    {
+      "pizzaId": 2,
+      "quantity": 1,
+      "price": 300.00,
+      "specialRequests": "Без лука"
+    }
+  ]
+}
+
+### Update order by id
+PUT http://localhost:8080/api/orders/202
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "status": "NEW",
+  "totalPrice": 1200.00,
+  "deliveryAddress": "г. Москва, ул. 8Марта, д. 3, кв. 5",
+  "paymentMethod": "CASH",
+  "paymentStatus": "PENDING",
+  "items": [
+    {
+      "pizzaId": 1,
+      "quantity": 2,
+      "price": 890.00
+    },
+    {
+      "pizzaId": 1,
+      "quantity": 1,
+      "price": 310.00,
+      "specialRequests": "Без лука"
+    }
+  ]
+}
+
+### Delete order by id
+DELETE http://localhost:8080/api/orders/11

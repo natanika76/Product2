@@ -1,0 +1,49 @@
+### Get all pizzas
+GET http://localhost:8080/api/pizzas
+
+### Add new pizza
+POST http://localhost:8080/api/pizzas
+Content-Type: application/json
+
+{
+    "name": "Дьябло",
+    "description": "Острая пицца с пепперони и перцем чили",
+    "price": 590.00,
+    "imageUrl": "diablo.jpg",
+    "category": "Острые"
+}
+
+### Add new pizza
+POST http://localhost:8080/api/pizzas
+Content-Type: application/json
+
+{
+  "name": "Diablo",
+  "description": "Острая пицца с перцем чили",
+  "price": 600,
+  "available": true,
+  "imageUrl": "diablo.jpg",
+  "cookingTimeMin": 15,
+  "category": "Острые",
+  "ingredients": [
+    {
+      "ingredientId": 1,
+      "quantity": 0.2
+    },
+    {
+      "ingredientId": 2,
+      "quantity": 0.15
+    },
+    {
+      "ingredientId": 6,
+      "quantity": 0.2
+    },
+    {
+      "ingredientId": 8,
+      "quantity": 0.15
+    }
+  ]
+}
+
+### Delete pizza by id
+DELETE http://localhost:8080/api/pizzas/7
